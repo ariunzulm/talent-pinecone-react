@@ -1,10 +1,11 @@
 "use client";
+
+import FormContainer from "./components/FormContainer";
+
 export default function Page() {
   return (
-    <div>
-      <article>
-        <a href="/continue1"></a>
-      </article>
+    <div className="flex justify-center w-full min-h-screen items-center">
+      <FormContainer />
     </div>
   );
 }
