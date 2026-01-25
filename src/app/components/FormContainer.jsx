@@ -1,22 +1,48 @@
-import FormInput from "./InputContainer";
+import { useState } from "react";
+import ButtonContainer from "./ButtonContainer";
+import InputContainer from "./InputContainer";
 
 export default function FormContainer() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+  });
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+  });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleContinue = () => {
+    console.log(firstName);
+  };
+
   return (
-    <div className="bg-white px-8 py-8 w-120 h-auto flex flex-col gap-7 shadow-2xl">
-      <article className="flex flex-col gap-2 w-full  ">
-        <img
-          className="max-w-15 h-full object-contain"
-          src="/Main 1.svg"
-          alt="Main logo"
-        />
-        <h1 className="font-semibold text-[26px] text-[#202124] text-shadow-md leading-none align-middle">
-          Join Us! 😎
-        </h1>
-        <p className="text-[#8E8E8E] text-[18px] tracking-normal">
-          Please provide all current information accurately.
-        </p>
-      </article>
-      <FormInput />
+    <div className="flex flex-col gap-2">
+      <InputContainer
+        label="First Name:"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+      />
+      <InputContainer
+        label="Last Name:"
+        name="lastName"
+        value={formData.username}
+        onChange={handleChange}
+      />
+      <InputContainer
+        label="Username:"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
+      />
+      <ButtonContainer onClick={handleContinue} />
     </div>
   );
 }
