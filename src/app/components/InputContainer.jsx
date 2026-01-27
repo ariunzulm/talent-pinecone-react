@@ -1,5 +1,5 @@
-export default function InputContainer({
-  type = "text",
+export default function Input({
+  type,
   value,
   onChange,
   name,
