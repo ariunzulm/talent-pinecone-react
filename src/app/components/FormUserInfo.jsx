@@ -1,46 +1,32 @@
 import Input from "./InputContainer";
-import { ToastContainer, toast } from "react-toastify";
 import NextButton from "./NextButton";
+import PageHero from "./PageHero";
+import validateUserInfo from "./validateUserInfo";
 
 export default function FormUserInfo({
   formData,
   handleChange,
   errors,
   handleNext,
+  updateErrors,
   step,
 }) {
-  //   const validateFormData = () => {
-  //     const newErrors = {
-  //       firstName: "",
-  //       lastName: "",
-  //       username: "",
-  //     };
+  const onSubmit = () => {
+    const { isValid, infoErrors } = validateUserInfo(formData);
 
-  //     if (formData.firstName === "") {
-  //       newErrors.firstName = "Нэрээ оруулна уу.";
-  //     } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-  //       newErrors.firstName =
-  //         "First name cannot contain special characters or numbers.";
-  //     }
-  //     if (formData.lastName === "") {
-  //       newErrors.lastName = "Овогоо оруулна уу.";
-  //     } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-  //       newErrors.lastName =
-  //         "Last name cannot contain special characters or numbers.";
-  //     }
-  //     if (formData.username === "") {
-  //       newErrors.username = "Хэрэглэгчийн нэрээ оруулна уу.";
-  //     } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-  //       newErrors.username =
-  //         "This username is already taken. Please choose another one.";
-  //     }
-  //     setErrors(newErrors);
-  //   };
+    if (isValid) {
+      handleNext();
+    }
+
+    updateErrors(infoErrors);
+  };
   return (
     <div className="flex flex-col gap-2">
+      <PageHero />
+
       <Input
         type="text"
-        label="First Name:"
+        label="First Name"
         placeholder="Your first name"
         name="firstName"
         value={formData.firstName}
@@ -51,7 +37,7 @@ export default function FormUserInfo({
 
       <Input
         type="text"
-        label="Last Name:"
+        label="Last Name"
         placeholder="Your last name"
         name="lastName"
         value={formData.lastName}
@@ -61,7 +47,7 @@ export default function FormUserInfo({
       />
       <Input
         type="text"
-        label="Username:"
+        label="Username"
         placeholder="Your username"
         name="username"
         value={formData.username}
@@ -70,8 +56,8 @@ export default function FormUserInfo({
         required={true}
       />
 
-      <div className=" w-full">
-        <NextButton handleNext={handleNext} step={step} />
+      <div className="w-full">
+        <NextButton handleNext={onSubmit} step={step} />
       </div>
     </div>
   );

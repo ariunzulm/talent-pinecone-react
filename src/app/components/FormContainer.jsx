@@ -3,9 +3,11 @@ import { useState } from "react";
 import FormUserDetails from "./FormUserDetails";
 import FormUserProfile from "./FormUserProfile";
 import FormSuccess from "./FormSuccess";
-
-import { toast, ToastContainer } from "react-toastify";
 import FormUserInfo from "./FormUserInfo";
+import { toast, ToastContainer } from "react-toastify";
+import validateUserInfo from "./validateUserInfo";
+import validateUserDetails from "./validateUserDetails";
+import validateUserProfile from "./ValidateUserProfile";
 
 export default function FormContainer() {
   const [step, setStep] = useState(1);
@@ -39,75 +41,21 @@ export default function FormContainer() {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
-  const validateUserInfo = () => {
-    const infoErrors = {
-      firstName: "",
-      lastName: "",
-      username: "",
-    };
+  const stepIsValid = () => {
+    const data = { ...isValid };
+    if (step === 1) return validateUserInfo(data) === true;
+    if (step === 2) return validateUserDetails(data) === true;
+    if (step === 3) return validateUserProfile(data) == true;
 
-    if (formData.firstName === "") {
-      infoErrors.firstName = "Нэрээ оруулна уу.";
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-      infoErrors.firstName =
-        "First name cannot contain special characters or numbers.";
-    }
-    if (formData.lastName === "") {
-      infoErrors.lastName = "Овогоо оруулна уу.";
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-      infoErrors.lastName =
-        "Last name cannot contain special characters or numbers.";
-    }
-    if (formData.username === "") {
-      infoErrors.username = "Хэрэглэгчийн нэрээ оруулна уу.";
-    } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
-      infoErrors.username =
-        "This username is already taken. Please choose another one.";
-    }
-    setErrors(infoErrors);
+    return false;
   };
-  const validateUserDetails = () => {
-    const detailsErrors = {
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-    };
-    if (formData.email === "") {
-      detailsErrors.email = "Мэйл хаягаа оруулна уу";
-    } else if (
-      !/^[a-zA-Z0–9._%+-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)
-    ) {
-      detailsErrors.email = "Зөв мэйл хаяг оруулна уу";
-    } else {
-      detailsErrors.email = "";
-    }
-    if (!/^[0-9]{7,8}$/.test(formData.phoneNumber)) {
-      detailsErrors.phoneNumber = "Утасны дугаараа оруулна уу.";
-    } else if (formData.phoneNumber.length < 8) {
-      detailsErrors.phoneNumber = "8 оронтой дугаар оруулна уу.";
-    }
-    if (formData.password === "") {
-      detailsErrors.password = "Нууц үгээ оруулна уу";
-    } else if (formData.password < 6) {
-      detailsErrors.password = "6 оронтой тоо оруулна уу.";
-    }
-    if (formData.confirmPassword === "") {
-      detailsErrors.password = "Нууц үгээ давтаж оруулна уу";
-    } else if (formData.confirmPassword !== formData.passWord) {
-      detailsErrors.confirmPassword = "Таны оруулсан нууц үг таарахгүй байна.";
-    }
-    setErrors(detailsErrors);
-  };
-
   const handleNext = () => {
-    const isValid = validateUserInfo() || validateUserDetails();
-    if (isValid) {
+    if (stepIsValid) {
       toast.success("Valid form", { position: "top-right" });
+      setStep(step + 1);
     } else {
       toast.error("Invalid form", { position: "top-right" });
     }
-    setStep(step + 1);
   };
 
   const handleBack = () => {
@@ -115,7 +63,10 @@ export default function FormContainer() {
       setStep(step - 1);
     }
   };
-  console.log(step);
+
+  const updateErrors = (newErros) => {
+    setErrors({ ...errors, ...newErros });
+  };
 
   return (
     <div>
@@ -124,8 +75,9 @@ export default function FormContainer() {
           formData={formData}
           handleChange={handleChange}
           errors={errors}
-          handleNext={handleNext}
+          updateErrors={updateErrors}
           step={step}
+          handleNext={handleNext}
         />
       )}
 
@@ -134,8 +86,9 @@ export default function FormContainer() {
           formData={formData}
           handleChange={handleChange}
           errors={errors}
-          handleNext={handleNext}
+          updateErrors={updateErrors}
           step={step}
+          handleNext={handleNext}
           handleBack={handleBack}
         />
       )}
@@ -144,9 +97,10 @@ export default function FormContainer() {
           formData={formData}
           handleChange={handleChange}
           errors={errors}
+          updateErrors={updateErrors}
+          step={step}
           handleBack={handleBack}
           handleNext={handleNext}
-          step={step}
         />
       )}
       {step === 4 && <FormSuccess />}

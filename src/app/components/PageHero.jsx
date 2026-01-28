@@ -1,6 +1,6 @@
 export default function PageHero() {
   return (
-    <article className="flex flex-col gap-2 w-full  ">
+    <article className="flex flex-col gap-2 w-full">
       <img
         className="max-w-15 h-full object-contain"
         src="/Main 1.svg"
