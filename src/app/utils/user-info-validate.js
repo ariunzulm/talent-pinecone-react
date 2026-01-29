@@ -1,21 +1,33 @@
+import { isContainSpecialChars, isEmpty, isEmptyObject } from "./validate";
+
 export default function validateUserInfo(formData) {
+  const { firstName, lastName, username } = formData;
+
   const infoErrors = {};
 
-  if (formData.firstName === "") {
+  if (isEmpty(firstName)) {
     infoErrors.firstName = "Нэрээ оруулна уу.";
-  } else if (!/^[a-zA-Z\s]+$/.test(formData.firstName)) {
+  }
+
+  if (isContainSpecialChars(firstName)) {
     infoErrors.firstName =
       "First name cannot contain special characters or numbers.";
   }
-  if (formData.lastName === "") {
+
+  if (isEmpty(lastName)) {
     infoErrors.lastName = "Овогоо оруулна уу.";
-  } else if (!/^[a-zA-Z\s]+$/.test(formData.lastName)) {
+  }
+
+  if (isContainSpecialChars(lastName)) {
     infoErrors.lastName =
       "Last name cannot contain special characters or numbers.";
   }
-  if (formData.username === "") {
+
+  if (isEmpty(username)) {
     infoErrors.username = "Хэрэглэгчийн нэрээ оруулна уу.";
-  } else if (!/^[a-zA-Z\s]+$/.test(formData.username)) {
+  }
+
+  if (isContainSpecialChars(username)) {
     infoErrors.username =
       "This username is already taken. Please choose another one.";
   }
@@ -27,5 +39,3 @@ export default function validateUserInfo(formData) {
     infoErrors,
   };
 }
-
-const isEmptyObject = (object) => Object.keys(object).length === 0;

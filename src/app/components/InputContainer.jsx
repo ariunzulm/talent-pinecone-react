@@ -17,7 +17,7 @@ export default function Input({
         </label>
 
         <input
-          className={`${error ? "border-red-600 border" : "border-gray-200 border"} w-full border py-1.5  px-3 rounded-sm text-base leading-8 transition-colors  hover:border-[#0CA5E9] focus:border-[#0CA5E9] Focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`${error ? "border-red-600 border" : "border-gray-200 border"} w-full border py-1.5  px-3 rounded-sm text-base leading-8 transition-colors  hover:border-[#0CA5E9] focus:border-[#0CA5E9] Focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
           type={type}
           value={value}
           name={name}
