@@ -3,9 +3,8 @@ import BackButton from "./BackButton";
 import Input from "./InputContainer";
 import NextButton from "./NextButton";
 import PageHero from "./PageHero";
-
 import { motion } from "motion/react";
-import validateUserDetails from "../utils/user-details";
+import validateUserDetails from "../utils/user-details-validate";
 
 export default function FormUserDetails({
   formData,
@@ -22,7 +21,7 @@ export default function FormUserDetails({
       setIsOn(-100);
       setTimeout(() => {
         handleNext();
-      }, 1000);
+      }, 500);
     }
     updateErrors(detailsErrors);
   };

@@ -6,7 +6,7 @@ export default function validateUserInfo(formData) {
   const infoErrors = {};
 
   if (isEmpty(firstName)) {
-    infoErrors.firstName = "Нэрээ оруулна уу.";
+    infoErrors.firstName = "Enter your first name.";
   }
 
   if (isContainSpecialChars(firstName)) {
@@ -15,7 +15,7 @@ export default function validateUserInfo(formData) {
   }
 
   if (isEmpty(lastName)) {
-    infoErrors.lastName = "Овогоо оруулна уу.";
+    infoErrors.lastName = "Enter your last name.";
   }
 
   if (isContainSpecialChars(lastName)) {
@@ -24,7 +24,7 @@ export default function validateUserInfo(formData) {
   }
 
   if (isEmpty(username)) {
-    infoErrors.username = "Хэрэглэгчийн нэрээ оруулна уу.";
+    infoErrors.username = "Enter your username.";
   }
 
   if (isContainSpecialChars(username)) {

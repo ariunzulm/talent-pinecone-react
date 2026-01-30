@@ -5,11 +5,11 @@ import FormUserProfile from "./FormUserProfile";
 import FormSuccess from "./FormSuccess";
 import FormUserInfo from "./FormUserInfo";
 import { toast, ToastContainer } from "react-toastify";
-import validateUserDetails from "../utils/user-details";
-import validateUserProfile from "../utils/user-profile";
+import validateUserDetails from "../utils/user-details-validate";
+import validateUserProfile from "../utils/user-profile-validate";
 
 export default function FormContainer() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -101,8 +101,9 @@ export default function FormContainer() {
           handleBack={handleBack}
           handleNext={handleNext}
         />
-      )}{" "}
-      {step === 4 && <FormSuccess />}
+      )}
+      {step === 4 && <FormSuccess formData={formData} />}
+
       <ToastContainer />
     </div>
   );

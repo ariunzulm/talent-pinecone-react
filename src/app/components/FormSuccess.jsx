@@ -1,5 +1,4 @@
-import { motion } from "motion/react";
-export default function FormSuccess() {
+export default function FormSuccess(    ) {
   return (
     <div className="bg-white px-8 py-8 w-120 h-auto flex flex-col gap-7 shadow-2xl rounded-lg">
       <div className="flex flex-col gap-2 w-full p-8 rounded-md">

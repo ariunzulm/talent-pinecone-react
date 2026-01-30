@@ -1,4 +1,4 @@
-import { Image } from "lucide-react";
+import { Image, UserRound } from "lucide-react";
 import Input from "./InputContainer";
 import BackButton from "./BackButton";
 import NextButton from "./NextButton";
@@ -6,7 +6,7 @@ import PageHero from "./PageHero";
 
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
-import validateUserProfile from "../utils/user-profile";
+import validateUserProfile from "../utils/user-profile-validate";
 
 export default function FormUserProfile({
   formData,
@@ -22,16 +22,29 @@ export default function FormUserProfile({
 
   const handleFileUpload = () => {
     const event = { target: { name: "image", value: ref.current.files[0] } };
+
     handleChange(event);
   };
 
+  const openFileUploadWindow = () => {
+    ref.current.click();
+  };
+
+  const handleRemoveImage = () => {
+    if (ref.current) {
+      ref.current.value = "";
+    }
+
+    const event = { target: { name: "image", value: null } };
+    handleChange(event);
+  };
   const onSubmit = () => {
     const { isValid, profileErrors } = validateUserProfile(formData);
     if (isValid) {
       setIsOn(-100);
       setTimeout(() => {
         handleNext();
-      }, 1000);
+      }, 500);
     }
     updateErrors(profileErrors);
   };
@@ -75,20 +88,31 @@ export default function FormUserProfile({
           >
             <input
               type="file"
-              className="border w-full h-full relative opacity-0 cursor-pointer"
+              className="border w-full h-auto  relative opacity-0 cursor-pointer rounded-md"
               name="image"
               error={errors.image}
               ref={ref}
               onChange={handleFileUpload}
             />
             {image ? (
-              <img
-                src={URL.createObjectURL(image)}
-                alt="Profile image"
-                className="w-full h-auto object-cover"
-              />
+              <div className="relative">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Profile image"
+                  className="w-full h-auto object-cover rounded-md"
+                />
+                <span
+                  onClick={handleRemoveImage}
+                  className="absolute top-3 right-3  cursor-pointer text-3 font-stretch-150  w-8 h-8 flex justify-center items-center text-white bg-black  rounded-full"
+                >
+                  X
+                </span>
+              </div>
             ) : (
-              <div className="flex flex-col absolute">
+              <div
+                className="flex flex-col absolute"
+                onClick={openFileUploadWindow}
+              >
                 <Image className="bg-white h-7 w-7 rounded-full p-2 mx-auto" />
                 <p className="text-sm font-medium">Browse or Drop Image</p>
               </div>

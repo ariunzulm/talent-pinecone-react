@@ -22,7 +22,7 @@ export default function FormUserInfo({
       setIsOn(-100);
       setTimeout(() => {
         handleNext();
-      }, 1000);
+      }, 500);
     }
 
     updateErrors(infoErrors);
