@@ -9,7 +9,7 @@ import validateUserDetails from "../utils/user-details-validate";
 import validateUserProfile from "../utils/user-profile-validate";
 
 export default function FormContainer() {
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(0);
 
   const [formData, setFormData] = useState({
     firstName: "",
